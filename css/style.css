@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
    /* Página de estilos desenvolvida por Marilene Costa e Reginaldo Formoso */
    
@@ -916,4 +917,924 @@ body {
 .info-row strong {
     color: #0f172a;
     font-weight: 600;
+=======
+
+   /* Página de estilos desenvolvida por Marilene Costa e Reginaldo Formoso */
+   
+   /* 1. Configurações Globais e Variáveis */
+   
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8fafc;
+    color: #1e293b;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+   /* 2. Estrutura Principal (Layout App) */
+   
+.app-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+   /* 3. Menu Lateral (Sidebar) */
+   
+.sidebar {
+    width: 260px;
+    background-color: #0f172a;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 20px;
+    flex-shrink: 0;
+}
+
+.logo-area h2 {
+    font-size: 1.25rem;
+    color: #f8fafc;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+}
+
+.menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.menu-category {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 1px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.menu-nav a {
+    color: #94a3b8;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.menu-nav a:hover, 
+.menu-nav a.active {
+    background-color: #1e293b;
+    color: #ffffff;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 15px;
+    border-top: 1px solid #1e293b;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info .name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.user-info .role {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+   /* 4. Conteúdo Principal e Barra Superior */
+   
+.main-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.top-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 8px 14px;
+    border-radius: 8px;
+    width: 350px;
+}
+
+.search-box input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 0.9rem;
+    color: #1e293b;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: relative;
+    color: #64748b;
+}
+
+.badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #dc2626;
+    color: #ffffff;
+    font-size: 0.65rem;
+    padding: 2px 5px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.user-quick-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.avatar-small {
+    width: 32px;
+    height: 32px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.user-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+   /* 5. Página Inicial (Início) */
+   
+.welcome-banner {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.welcome-banner h1 {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+}
+
+.welcome-banner p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.metrics-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.metric-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.metric-icon {
+    font-size: 1.8rem;
+    background-color: #eff6ff;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.metric-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-number {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #0f172a;
+}
+
+.metric-label {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section-header h2 {
+    font-size: 1.2rem;
+    color: #0f172a;
+}
+
+.see-all {
+    font-size: 0.85rem;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.see-all:hover {
+    text-decoration: underline;
+}
+
+.disciplines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.discipline-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.discipline-icon {
+    font-size: 1.5rem;
+}
+
+.discipline-card h3 {
+    font-size: 1rem;
+    color: #0f172a;
+}
+
+.professor {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #2563eb;
+    border-radius: 3px;
+}
+
+.notices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notice-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 16px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.notice-tag {
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background-color: #f1f5f9;
+    color: #475569;
+    white-space: nowrap;
+}
+
+.notice-tag.urgent {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+.notice-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.notice-content h4 {
+    font-size: 0.95rem;
+    color: #0f172a;
+}
+
+.notice-content p {
+    font-size: 0.85rem;
+    color: #475569;
+}
+
+.notice-date {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+   /* 6. Páginas Internas (Cabeçalho Comum) */
+   
+.page-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.page-header h1 {
+    font-size: 1.5rem;
+    color: #0f172a;
+}
+
+.page-header p {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+   /* 7. Estilos da Página de Disciplinas */
+   
+.full-disciplines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.discipline-detailed-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-badge {
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.status-badge.active {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.discipline-detailed-card h3 {
+    font-size: 1.1rem;
+    color: #0f172a;
+}
+
+.discipline-stats {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f8fafc;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #f1f5f9;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.stat-item strong {
+    font-size: 0.9rem;
+    color: #0f172a;
+}
+
+.btn-access {
+    background-color: #f1f5f9;
+    color: #2563eb;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-access:hover {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+   /* 8. Estilos da Página de Materiais */
+
+.materials-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.material-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.material-icon-file {
+    width: 48px;
+    height: 48px;
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.material-details {
+    flex-grow: 1;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.material-details h3 {
+    font-size: 1rem;
+    color: #0f172a;
+}
+
+.material-subject {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.material-date {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+.btn-download {
+    background-color: #f1f5f9;
+    color: #2563eb;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-download:hover {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+   /* 9. Estilos da Página de Avisos */
+  
+.notices-list-full {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.notice-card-full {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notice-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notice-card-full h3 {
+    font-size: 1.15rem;
+    color: #0f172a;
+}
+
+.notice-card-full p {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.notice-author {
+    margin-top: 5px;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+   /* 10. Estilos da Página de Atividades */
+  
+.activities-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.activity-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.activity-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.activity-icon-box.pending {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.activity-icon-box.completed {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.activity-details {
+    flex-grow: 1;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.activity-details h3 {
+    font-size: 1rem;
+    color: #0f172a;
+}
+
+.activity-subject {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.activity-deadline {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+.urgent-text {
+    color: #dc2626 !important;
+    font-weight: 600;
+}
+
+.activity-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+    margin-left: 20px;
+}
+
+.status-badge.pending {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+.status-badge.completed {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.btn-submit {
+    background-color: #2563eb;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: #1d4ed8;
+}
+
+.btn-view {
+    background-color: #f1f5f9;
+    color: #475569;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-view:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+   /* 11. Estilos da Página de Vagas de Estágio */
+  
+   .internships-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.internship-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.internship-icon-box {
+    width: 48px;
+    height: 48px;
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.internship-details {
+    flex-grow: 1;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.internship-details h3 {
+    font-size: 1.05rem;
+    color: #0f172a;
+}
+
+.company-name {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.internship-desc {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.4;
+    margin-top: 4px;
+}
+
+.internship-salary {
+    font-size: 0.8rem;
+    color: #16a34a;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.internship-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    flex-shrink: 0;
+    margin-left: 20px;
+}
+
+.btn-apply {
+    background-color: #2563eb;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.btn-apply:hover {
+    background-color: #1d4ed8;
+}
+
+   /* 12. Estilos da Página de Perfil */
+   
+   .profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.profile-card-header {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.profile-big-avatar {
+    width: 72px;
+    height: 72px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.profile-title-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+}
+
+.profile-title-info h2 {
+    font-size: 1.3rem;
+    color: #0f172a;
+}
+
+.profile-title-info p {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.profile-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.profile-info-box {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.profile-info-box h3 {
+    font-size: 1.05rem;
+    color: #0f172a;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.info-row span {
+    color: #64748b;
+}
+
+.info-row strong {
+    color: #0f172a;
+    font-weight: 600;
+>>>>>>> 0f0ca27600d2a0a5e08a30a1ac74977a920866d9
 }
