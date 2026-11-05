@@ -1838,3 +1838,21 @@ body {
     font-weight: 600;
 >>>>>>> 0f0ca27600d2a0a5e08a30a1ac74977a920866d9
 }
+
+/* --- Banner de Alerta Acadêmico --- */
+.alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #eef2ff;
+  border-left: 4px solid #4f46e5;
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin: 20px 0;
+  color: #312e81;
+  font-size: 0.95rem;
+}
+
+.alert-icon {
+  font-size: 1.3rem;
+}
