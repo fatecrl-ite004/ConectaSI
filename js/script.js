@@ -35,14 +35,67 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 2. Botão de notificações (zera o contador na demonstração)
+    // 2. Botão de notificações (abre/fecha painel com avisos e zera o contador)
     const notifBtn = document.querySelector(".icon-btn[title='Notificações']");
     const badge = notifBtn ? notifBtn.querySelector(".badge") : null;
+    const navbarActions = document.querySelector(".navbar-actions");
 
-    if (notifBtn && badge) {
-        notifBtn.addEventListener("click", () => {
-            badge.textContent = "0";
-            badge.style.display = "none";
+    if (notifBtn && navbarActions) {
+        let notifDropdown = document.querySelector(".notif-dropdown");
+
+        if (!notifDropdown) {
+            notifDropdown = document.createElement("div");
+            notifDropdown.className = "notif-dropdown";
+            notifDropdown.style.display = "none";
+            notifDropdown.style.position = "absolute";
+            notifDropdown.style.top = "calc(100% + 8px)";
+            notifDropdown.style.right = "0";
+            notifDropdown.style.width = "290px";
+            notifDropdown.style.backgroundColor = "#ffffff";
+            notifDropdown.style.color = "#0f172a";
+            notifDropdown.style.border = "1px solid #e2e8f0";
+            notifDropdown.style.borderRadius = "12px";
+            notifDropdown.style.boxShadow = "0 10px 25px rgba(15, 23, 42, 0.12)";
+            notifDropdown.style.padding = "12px";
+            notifDropdown.style.zIndex = "50";
+            notifDropdown.style.fontSize = "0.875rem";
+
+            notifDropdown.innerHTML = `
+                <div style="font-weight: 700; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #e2e8f0;">
+                    Notificações recentes
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">
+                    <div><strong>Votação:</strong> Profa. Vanina Sigrist no ChangeMakers 2026</div>
+                    <div><strong>Atividade:</strong> Entrega de Desenvolvimento Web I</div>
+                    <div><strong>Evento:</strong> Semana Acadêmica de Tecnologia</div>
+                </div>
+                <a href="avisos.html" style="display: inline-block; font-weight: 600; color: #16a34a; text-decoration: none;">
+                    Ver mural completo →
+                </a>
+            `;
+
+            if (getComputedStyle(navbarActions).position === "static") {
+                navbarActions.style.position = "relative";
+            }
+            navbarActions.appendChild(notifDropdown);
+        }
+
+        notifBtn.addEventListener("click", (event) => {
+            event.stopPropagation();
+
+            if (badge) {
+                badge.textContent = "0";
+                badge.style.display = "none";
+            }
+
+            const estaVisivel = notifDropdown.style.display === "block";
+            notifDropdown.style.display = estaVisivel ? "none" : "block";
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!notifDropdown.contains(event.target) && !notifBtn.contains(event.target)) {
+                notifDropdown.style.display = "none";
+            }
         });
     }
 
