@@ -187,14 +187,90 @@ document.addEventListener("DOMContentLoaded", () => {
         materialsContainer.appendChild(emptyMsg);
     }
 
-    // 3. Feedback visual simples ao clicar em "Candidatar-se" nas vagas de estágio
+    // 3. Candidatura em vagas de estágio (abre caixa para currículo/observação no card)
     const applyButtons = document.querySelectorAll(".btn-apply");
     applyButtons.forEach((btn) => {
         btn.addEventListener("click", (event) => {
             event.preventDefault();
-            btn.textContent = "Enviado ✓";
-            btn.style.backgroundColor = "#16a34a";
-            btn.style.color = "#ffffff";
+
+            const card = btn.closest(".internship-card");
+            if (!card || btn.dataset.candidatado === "true") return;
+
+            let applyBox = card.querySelector(".internship-apply-box");
+            if (applyBox) {
+                applyBox.remove();
+                return;
+            }
+
+            applyBox = document.createElement("div");
+            applyBox.className = "internship-apply-box";
+            applyBox.style.marginTop = "14px";
+            applyBox.style.padding = "14px";
+            applyBox.style.borderRadius = "10px";
+            applyBox.style.backgroundColor = "#f8fafc";
+            applyBox.style.border = "1px solid #cbd5e1";
+            applyBox.style.color = "#0f172a";
+            applyBox.style.width = "100%";
+
+            applyBox.innerHTML = `
+                <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 10px;">
+                    Enviar currículo para a vaga
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <input type="file" class="apply-resume-input" accept=".pdf,.doc,.docx" style="font-size: 0.85rem;">
+                    <input type="text" class="apply-link-input" placeholder="Link do LinkedIn/Portfólio ou mensagem (opcional)" style="padding: 8px 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.875rem; background-color: #ffffff; color: #0f172a;">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn-confirm-apply" style="padding: 8px 14px; border-radius: 8px; border: none; background-color: #16a34a; color: #ffffff; font-weight: 600; font-size: 0.85rem; cursor: pointer;">
+                            Confirmar Candidatura
+                        </button>
+                        <button type="button" class="btn-cancel-apply" style="padding: 8px 14px; border-radius: 8px; border: 1px solid #cbd5e1; background-color: #ffffff; color: #334155; font-weight: 600; font-size: 0.85rem; cursor: pointer;">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            card.appendChild(applyBox);
+
+            const resumeInput = applyBox.querySelector(".apply-resume-input");
+            const linkInput = applyBox.querySelector(".apply-link-input");
+            const btnConfirmar = applyBox.querySelector(".btn-confirm-apply");
+            const btnCancelar = applyBox.querySelector(".btn-cancel-apply");
+
+            btnCancelar.addEventListener("click", () => {
+                applyBox.remove();
+            });
+
+            btnConfirmar.addEventListener("click", () => {
+                const curriculo = resumeInput?.files?.[0]?.name || "curriculo-marilene.pdf";
+                const complemento = linkInput?.value.trim() || "";
+
+                let receipt = card.querySelector(".internship-receipt");
+                if (!receipt) {
+                    receipt = document.createElement("div");
+                    receipt.className = "internship-receipt";
+                    receipt.style.marginTop = "12px";
+                    receipt.style.padding = "10px 12px";
+                    receipt.style.borderRadius = "8px";
+                    receipt.style.backgroundColor = "#f0fdf4";
+                    receipt.style.border = "1px solid #bbf7d0";
+                    receipt.style.color = "#166534";
+                    receipt.style.fontSize = "0.85rem";
+                    receipt.style.width = "100%";
+                    card.appendChild(receipt);
+                }
+
+                receipt.textContent =
+                    `Candidatura enviada • Currículo: ${curriculo}` +
+                    (complemento ? ` • ${complemento}` : "");
+
+                btn.dataset.candidatado = "true";
+                btn.textContent = "Enviado ✓";
+                btn.style.backgroundColor = "#16a34a";
+                btn.style.color = "#ffffff";
+
+                applyBox.remove();
+            });
         });
     });
 
