@@ -99,6 +99,94 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 2.1. Salva a disciplina selecionada ao clicar em "Acessar Disciplina"
+    const accessLinks = document.querySelectorAll(".discipline-detailed-card .btn-access, .discipline-card .btn-access");
+    accessLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            const card = link.closest(".discipline-detailed-card, .discipline-card");
+            const nomeDisciplina = card?.querySelector("h3, h2")?.textContent.trim();
+            if (nomeDisciplina) {
+                localStorage.setItem("conectasi_disciplina_filtro", nomeDisciplina);
+            }
+        });
+    });
+
+    // 2.2. Aplica filtro da disciplina em materiais.html e permite mostrar todos
+    const materialsContainer = document.querySelector(".materials-list-container");
+    const disciplinaFiltro = localStorage.getItem("conectasi_disciplina_filtro");
+
+    if (materialsContainer && disciplinaFiltro) {
+        const materialCards = Array.from(materialsContainer.querySelectorAll(".material-card"));
+        const termoFiltro = disciplinaFiltro.toLowerCase();
+
+        const bannerFiltro = document.createElement("div");
+        bannerFiltro.className = "active-filter-banner";
+        bannerFiltro.style.display = "flex";
+        bannerFiltro.style.flexWrap = "wrap";
+        bannerFiltro.style.alignItems = "center";
+        bannerFiltro.style.justifyContent = "space-between";
+        bannerFiltro.style.gap = "12px";
+        bannerFiltro.style.padding = "12px 16px";
+        bannerFiltro.style.marginBottom = "16px";
+        bannerFiltro.style.borderRadius = "10px";
+        bannerFiltro.style.backgroundColor = "#eff6ff";
+        bannerFiltro.style.border = "1px solid #bfdbfe";
+        bannerFiltro.style.color = "#1e3a8a";
+        bannerFiltro.style.fontSize = "0.9rem";
+
+        const textoBanner = document.createElement("span");
+        const btnMostrarTodos = document.createElement("button");
+        btnMostrarTodos.type = "button";
+        btnMostrarTodos.textContent = "Mostrar todos os materiais";
+        btnMostrarTodos.style.padding = "6px 12px";
+        btnMostrarTodos.style.borderRadius = "8px";
+        btnMostrarTodos.style.border = "1px solid #93c5fd";
+        btnMostrarTodos.style.backgroundColor = "#ffffff";
+        btnMostrarTodos.style.color = "#1d4ed8";
+        btnMostrarTodos.style.fontWeight = "600";
+        btnMostrarTodos.style.cursor = "pointer";
+
+        const emptyMsg = document.createElement("p");
+        emptyMsg.style.padding = "16px";
+        emptyMsg.style.borderRadius = "10px";
+        emptyMsg.style.backgroundColor = "#f8fafc";
+        emptyMsg.style.border = "1px solid #e2e8f0";
+        emptyMsg.style.color = "#475569";
+        emptyMsg.style.display = "none";
+        emptyMsg.textContent = `Nenhum material cadastrado para "${disciplinaFiltro}" no momento.`;
+
+        let correspondentes = 0;
+        materialCards.forEach((card) => {
+            const textoCard = card.innerText.toLowerCase();
+            const corresponde = textoCard.includes(termoFiltro);
+            card.style.display = corresponde ? "" : "none";
+            if (corresponde) correspondentes += 1;
+        });
+
+        textoBanner.innerHTML =
+            correspondentes > 0
+                ? `Filtrando materiais de <strong>${disciplinaFiltro}</strong> (${correspondentes})`
+                : `Filtro selecionado: <strong>${disciplinaFiltro}</strong>`;
+
+        if (correspondentes === 0) {
+            emptyMsg.style.display = "block";
+        }
+
+        btnMostrarTodos.addEventListener("click", () => {
+            localStorage.removeItem("conectasi_disciplina_filtro");
+            materialCards.forEach((card) => {
+                card.style.display = "";
+            });
+            emptyMsg.style.display = "none";
+            bannerFiltro.remove();
+        });
+
+        bannerFiltro.appendChild(textoBanner);
+        bannerFiltro.appendChild(btnMostrarTodos);
+        materialsContainer.prepend(bannerFiltro);
+        materialsContainer.appendChild(emptyMsg);
+    }
+
     // 3. Feedback visual simples ao clicar em "Candidatar-se" nas vagas de estágio
     const applyButtons = document.querySelectorAll(".btn-apply");
     applyButtons.forEach((btn) => {
