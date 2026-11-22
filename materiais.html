@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ConectaSI - Materiais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -20,14 +23,14 @@
                 <a href="index.html">Início</a>
                 <a href="disciplinas.html">Disciplinas</a>
                 <a href="materiais.html" class="active">Materiais</a>
-                <a href="#">Atividades</a>
-                <a href="#">Avisos</a>
-                <a href="#">Vagas de Estágio</a>
-                <a href="#">Favoritos</a>
+                <a href="atividades.html">Atividades</a>
+                <a href="avisos.html">Avisos</a>
+                <a href="estagios.html">Vagas de Estágio</a>
+                <a href="disciplinas.html">Favoritos</a>
 
                 <span class="menu-category">OUTROS</span>
-                <a href="#">Perfil</a>
-                <a href="#">Configurações</a>
+                <a href="perfil.html">Perfil</a>
+                <a href="perfil.html">Configurações</a>
             </nav>
 
             <div class="user-profile">
@@ -76,7 +79,7 @@
                         <p class="material-subject">Desenvolvimento Web I • Prof. João Silva</p>
                         <span class="material-date">Enviado em: 12/09/2026 • PDF (2.4 MB)</span>
                     </div>
-                    <a href="#" class="btn-download">Baixar Arquivo</a>
+                    <a href="#" class="btn-download" onclick="alert('Download iniciado: Introdução ao CSS3 e Flexbox'); return false;">Baixar Arquivo</a>
                 </div>
 
                 <!-- Item de Material 2 -->
@@ -87,7 +90,7 @@
                         <p class="material-subject">Banco de Dados • Profa. Maria Souza</p>
                         <span class="material-date">Enviado em: 10/09/2026 • PDF (4.1 MB)</span>
                     </div>
-                    <a href="#" class="btn-download">Baixar Arquivo</a>
+                    <a href="#" class="btn-download" onclick="alert('Download iniciado: Modelagem Relacional e Normalização'); return false;">Baixar Arquivo</a>
                 </div>
 
                 <!-- Item de Material 3 -->
@@ -98,7 +101,7 @@
                         <p class="material-subject">Programação para Web • Prof. Carlos Lima</p>
                         <span class="material-date">Enviado em: 05/09/2026 • ZIP (1.8 MB)</span>
                     </div>
-                    <a href="#" class="btn-download">Baixar Arquivo</a>
+                    <a href="#" class="btn-download" onclick="alert('Download iniciado: Estrutura de Rotas em Aplicações Web'); return false;">Baixar Arquivo</a>
                 </div>
 
                 <!-- Item de Material 4 -->
@@ -109,11 +112,12 @@
                         <p class="material-subject">Engenharia de Software • Profa. Ana Paula</p>
                         <span class="material-date">Enviado em: 01/09/2026 • PDF (3.0 MB)</span>
                     </div>
-                    <a href="#" class="btn-download">Baixar Arquivo</a>
+                    <a href="#" class="btn-download" onclick="alert('Download iniciado: Processo de Requisitos e Casos de Uso'); return false;">Baixar Arquivo</a>
                 </div>
             </div>
         </main>
     </div>
 
+    <script src="js/script.js"></script>
 </body>
 </html>
