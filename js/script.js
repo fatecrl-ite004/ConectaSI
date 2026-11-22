@@ -84,4 +84,75 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.style.color = "#ffffff";
         });
     });
+
+    // 5. Envio de atividades pendentes em atividades.html
+    const submitButtons = document.querySelectorAll(".btn-submit");
+    submitButtons.forEach((btn) => {
+        btn.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            const card = btn.closest(".activity-card");
+            const statusBadge = card?.querySelector(".status-badge");
+            const iconBox = card?.querySelector(".activity-icon-box");
+            const deadline = card?.querySelector(".activity-deadline");
+
+            if (statusBadge) {
+                statusBadge.textContent = "Entregue";
+                statusBadge.classList.remove("pending");
+                statusBadge.classList.add("completed");
+            }
+
+            if (iconBox) {
+                iconBox.classList.remove("pending");
+                iconBox.classList.add("completed");
+            }
+
+            if (deadline) {
+                deadline.classList.remove("urgent-text");
+                const hoje = new Date().toLocaleDateString("pt-BR");
+                deadline.textContent = `Entregue em: ${hoje}`;
+            }
+
+            btn.textContent = "Enviado ✓";
+            btn.style.backgroundColor = "#16a34a";
+            btn.style.color = "#ffffff";
+        });
+    });
+
+    // 6. Detalhes do envio em atividades já entregues (sem alert)
+    const viewButtons = document.querySelectorAll(".btn-view");
+    viewButtons.forEach((btn) => {
+        btn.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            const card = btn.closest(".activity-card");
+            if (!card) return;
+
+            let infoBox = card.querySelector(".submission-receipt");
+            if (infoBox) {
+                infoBox.remove();
+                btn.textContent = "Ver Envio";
+                return;
+            }
+
+            const titulo = card.querySelector("h3")?.textContent.trim() || "Atividade";
+            const disciplina = card.querySelector(".activity-subject")?.textContent.trim() || "";
+            const entrega = card.querySelector(".activity-deadline")?.textContent.trim() || "Entregue";
+
+            infoBox = document.createElement("div");
+            infoBox.className = "submission-receipt";
+            infoBox.style.marginTop = "12px";
+            infoBox.style.padding = "10px 14px";
+            infoBox.style.borderRadius = "8px";
+            infoBox.style.backgroundColor = "#f0fdf4";
+            infoBox.style.border = "1px solid #bbf7d0";
+            infoBox.style.color = "#166534";
+            infoBox.style.fontSize = "0.875rem";
+            infoBox.style.width = "100%";
+            infoBox.textContent = `Comprovante de envio: ${titulo} (${disciplina}) • ${entrega}`;
+
+            card.appendChild(infoBox);
+            btn.textContent = "Ocultar Envio";
+        });
+    });
 });
