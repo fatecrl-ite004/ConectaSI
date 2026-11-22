@@ -25,20 +25,17 @@ document.addEventListener("DOMContentLoaded", () => {
         notifBtn.addEventListener("click", () => {
             badge.textContent = "0";
             badge.style.display = "none";
-            alert("Notificações acadêmicas visualizadas!");
         });
     }
 
-    // 3. Feedback rápido ao clicar em "Candidatar-se" nas vagas de estágio
+    // 3. Feedback visual simples ao clicar em "Candidatar-se" nas vagas de estágio
     const applyButtons = document.querySelectorAll(".btn-apply");
     applyButtons.forEach((btn) => {
         btn.addEventListener("click", (event) => {
             event.preventDefault();
-            const card = btn.closest(".internship-card");
-            const vagaTitulo = card ? card.querySelector("h3")?.innerText : "vaga";
-            btn.textContent = "Candidatura enviada ✓";
+            btn.textContent = "Enviado ✓";
             btn.style.backgroundColor = "#16a34a";
-            alert(`Interesse registrado na vaga: ${vagaTitulo}`);
+            btn.style.color = "#ffffff";
         });
     });
 });
