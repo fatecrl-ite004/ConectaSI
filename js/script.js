@@ -244,37 +244,95 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 5. Envio de atividades pendentes em atividades.html
+    // 5. Envio de atividades pendentes em atividades.html (abre caixa de arquivo no card)
     const submitButtons = document.querySelectorAll(".btn-submit");
     submitButtons.forEach((btn) => {
         btn.addEventListener("click", (event) => {
             event.preventDefault();
 
             const card = btn.closest(".activity-card");
-            const statusBadge = card?.querySelector(".status-badge");
-            const iconBox = card?.querySelector(".activity-icon-box");
-            const deadline = card?.querySelector(".activity-deadline");
+            if (!card || btn.dataset.enviado === "true") return;
 
-            if (statusBadge) {
-                statusBadge.textContent = "Entregue";
-                statusBadge.classList.remove("pending");
-                statusBadge.classList.add("completed");
+            let uploadBox = card.querySelector(".activity-upload-box");
+            if (uploadBox) {
+                uploadBox.remove();
+                return;
             }
 
-            if (iconBox) {
-                iconBox.classList.remove("pending");
-                iconBox.classList.add("completed");
-            }
+            uploadBox = document.createElement("div");
+            uploadBox.className = "activity-upload-box";
+            uploadBox.style.marginTop = "14px";
+            uploadBox.style.padding = "14px";
+            uploadBox.style.borderRadius = "10px";
+            uploadBox.style.backgroundColor = "#f8fafc";
+            uploadBox.style.border = "1px solid #cbd5e1";
+            uploadBox.style.color = "#0f172a";
+            uploadBox.style.width = "100%";
 
-            if (deadline) {
-                deadline.classList.remove("urgent-text");
-                const hoje = new Date().toLocaleDateString("pt-BR");
-                deadline.textContent = `Entregue em: ${hoje}`;
-            }
+            uploadBox.innerHTML = `
+                <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 10px;">
+                    Anexar entrega da atividade
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <input type="file" class="upload-file-input" style="font-size: 0.85rem;">
+                    <input type="text" class="upload-note-input" placeholder="Observação ou link (opcional)" style="padding: 8px 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.875rem; background-color: #ffffff; color: #0f172a;">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn-confirm-upload" style="padding: 8px 14px; border-radius: 8px; border: none; background-color: #16a34a; color: #ffffff; font-weight: 600; font-size: 0.85rem; cursor: pointer;">
+                            Confirmar Envio
+                        </button>
+                        <button type="button" class="btn-cancel-upload" style="padding: 8px 14px; border-radius: 8px; border: 1px solid #cbd5e1; background-color: #ffffff; color: #334155; font-weight: 600; font-size: 0.85rem; cursor: pointer;">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            `;
 
-            btn.textContent = "Enviado ✓";
-            btn.style.backgroundColor = "#16a34a";
-            btn.style.color = "#ffffff";
+            card.appendChild(uploadBox);
+
+            const fileInput = uploadBox.querySelector(".upload-file-input");
+            const noteInput = uploadBox.querySelector(".upload-note-input");
+            const btnConfirmar = uploadBox.querySelector(".btn-confirm-upload");
+            const btnCancelar = uploadBox.querySelector(".btn-cancel-upload");
+
+            btnCancelar.addEventListener("click", () => {
+                uploadBox.remove();
+            });
+
+            btnConfirmar.addEventListener("click", () => {
+                const arquivoSelecionado = fileInput?.files?.[0]?.name || "entrega-atividade.pdf";
+                const observacao = noteInput?.value.trim() || "";
+
+                card.dataset.arquivoEnviado = arquivoSelecionado;
+                card.dataset.observacaoEnvio = observacao;
+
+                const statusBadge = card.querySelector(".status-badge");
+                const iconBox = card.querySelector(".activity-icon-box");
+                const deadline = card.querySelector(".activity-deadline");
+
+                if (statusBadge) {
+                    statusBadge.textContent = "Entregue";
+                    statusBadge.classList.remove("pending");
+                    statusBadge.classList.add("completed");
+                }
+
+                if (iconBox) {
+                    iconBox.classList.remove("pending");
+                    iconBox.classList.add("completed");
+                }
+
+                if (deadline) {
+                    deadline.classList.remove("urgent-text");
+                    const hoje = new Date().toLocaleDateString("pt-BR");
+                    deadline.textContent = `Entregue em: ${hoje}`;
+                }
+
+                btn.dataset.enviado = "true";
+                btn.textContent = "Enviado ✓";
+                btn.style.backgroundColor = "#16a34a";
+                btn.style.color = "#ffffff";
+
+                uploadBox.remove();
+            });
         });
     });
 
@@ -297,6 +355,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const titulo = card.querySelector("h3")?.textContent.trim() || "Atividade";
             const disciplina = card.querySelector(".activity-subject")?.textContent.trim() || "";
             const entrega = card.querySelector(".activity-deadline")?.textContent.trim() || "Entregue";
+            const arquivo = card.dataset.arquivoEnviado || "entrega-final.pdf";
+            const observacao = card.dataset.observacaoEnvio;
 
             infoBox = document.createElement("div");
             infoBox.className = "submission-receipt";
@@ -308,7 +368,9 @@ document.addEventListener("DOMContentLoaded", () => {
             infoBox.style.color = "#166534";
             infoBox.style.fontSize = "0.875rem";
             infoBox.style.width = "100%";
-            infoBox.textContent = `Comprovante de envio: ${titulo} (${disciplina}) • ${entrega}`;
+            infoBox.textContent =
+                `Comprovante de envio: ${titulo} (${disciplina}) • Arquivo: ${arquivo} • ${entrega}` +
+                (observacao ? ` • Obs.: ${observacao}` : "");
 
             card.appendChild(infoBox);
             btn.textContent = "Ocultar Envio";
