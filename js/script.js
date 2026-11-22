@@ -1,6 +1,24 @@
 /* Script desenvolvido por Marilene Costa e Reginaldo Formoso para o ConectaSI */
 
 document.addEventListener("DOMContentLoaded", () => {
+    // 0. Aplica preferências salvas (tema, tamanho da fonte e foto) em todas as páginas
+    const temaSalvo = localStorage.getItem("conectasi_tema") || "padrao";
+    const escalaSalva = parseFloat(localStorage.getItem("conectasi_escala_fonte")) || 1;
+    const fotoSalva = localStorage.getItem("conectasi_foto_perfil");
+
+    document.body.classList.remove("tema-suave", "tema-escuro");
+    if (temaSalvo === "tema-suave" || temaSalvo === "tema-escuro") {
+        document.body.classList.add(temaSalvo);
+    }
+
+    document.documentElement.style.fontSize = `${escalaSalva * 16}px`;
+
+    if (fotoSalva) {
+        document.querySelectorAll(".avatar, .avatar-small, .profile-big-avatar").forEach((av) => {
+            av.innerHTML = `<img src="${fotoSalva}" alt="Foto de perfil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+        });
+    }
+
     // 1. Pesquisa instantânea nos cartões da página atual
     const searchInput = document.querySelector(".search-box input");
     if (searchInput) {

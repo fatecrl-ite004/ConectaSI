@@ -8,6 +8,74 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Ajustes de tema e acessibilidade via classes no body */
+        body.tema-suave .main-content {
+            background-color: #eef2f6;
+        }
+        body.tema-suave .profile-card-header,
+        body.tema-suave .profile-info-box {
+            background-color: #f8fafc;
+        }
+
+        body.tema-escuro .main-content {
+            background-color: #0f172a;
+            color: #f1f5f9;
+        }
+        body.tema-escuro .top-navbar,
+        body.tema-escuro .profile-card-header,
+        body.tema-escuro .profile-info-box {
+            background-color: #1e293b;
+            color: #f1f5f9;
+            border-color: #334155;
+        }
+        body.tema-escuro .page-header p,
+        body.tema-escuro .info-row span {
+            color: #cbd5e1;
+        }
+        body.tema-escuro .search-box input {
+            background-color: #0f172a;
+            color: #f1f5f9;
+        }
+
+        .config-actions-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .config-btn {
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #0f172a;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .config-btn.ativo {
+            background: #16a34a;
+            color: #ffffff;
+            border-color: #16a34a;
+        }
+        .status-feedback {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #16a34a;
+            min-height: 20px;
+        }
+        .edit-input {
+            width: 100%;
+            max-width: 260px;
+            padding: 6px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+    </style>
 </head>
 <body>
 
@@ -30,7 +98,7 @@
 
                 <span class="menu-category">OUTROS</span>
                 <a href="perfil.html" class="active">Perfil</a>
-                <a href="perfil.html">Configurações</a>
+                <a href="perfil.html#configuracoes">Configurações</a>
             </nav>
 
             <div class="user-profile">
@@ -66,18 +134,32 @@
             <!-- Cabeçalho da Página -->
             <div class="page-header">
                 <h1>Meu Perfil</h1>
-                <p>Gerencie suas informações acadêmicas e dados de cadastro na instituição.</p>
+                <p>Gerencie suas informações acadêmicas, foto e preferências de visualização.</p>
             </div>
 
             <!-- Conteúdo do Perfil -->
             <div class="profile-container">
                 <!-- Card de Apresentação -->
                 <div class="profile-card-header">
-                    <div class="profile-big-avatar">M</div>
+                    <div class="profile-big-avatar" id="avatarPerfil" style="overflow: hidden; display: flex; align-items: center; justify-content: center;">M</div>
                     <div class="profile-title-info">
-                        <h2>Marilene dos Santos Romão Costa</h2>
-                        <p>Sistemas para Internet • 4º Semestre</p>
+                        <h2 id="nomePerfilTexto">Marilene dos Santos Romão Costa</h2>
+                        <p id="cursoPerfilTexto">Sistemas para Internet • 4º Semestre</p>
                         <span class="status-badge active">Matrícula Ativa</span>
+
+                        <div class="config-actions-row">
+                            <label for="inputFotoPerfil" class="config-btn">
+                                Alterar Foto
+                            </label>
+                            <input type="file" id="inputFotoPerfil" accept="image/*" style="display: none;">
+                            <button type="button" id="btnEditarPerfil" class="config-btn">
+                                Editar Contato
+                            </button>
+                            <button type="button" id="btnSalvarPerfil" class="config-btn ativo" style="display: none;">
+                                Salvar Alterações
+                            </button>
+                        </div>
+                        <span id="feedbackPerfil" class="status-feedback"></span>
                     </div>
                 </div>
 
@@ -107,15 +189,15 @@
                         <h3>Informações de Contato</h3>
                         <div class="info-row">
                             <span>E-mail Institucional:</span>
-                            <strong>marilene.costa@fatec.br</strong>
+                            <strong id="emailInstTexto">marilene.costa@fatec.br</strong>
                         </div>
                         <div class="info-row">
                             <span>E-mail Pessoal:</span>
-                            <strong>marilene.santos@email.com</strong>
+                            <strong id="emailPessoalTexto">marilene.santos@email.com</strong>
                         </div>
                         <div class="info-row">
                             <span>Telefone:</span>
-                            <strong>(13) 99888-7766</strong>
+                            <strong id="telefoneTexto">(13) 99888-7766</strong>
                         </div>
                         <div class="info-row">
                             <span>Status da Conta:</span>
@@ -123,10 +205,187 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Seção de Configurações Visuais e Acessibilidade -->
+                <div id="configuracoes" class="profile-info-box" style="margin-top: 24px;">
+                    <h3>Configurações de Visualização e Acessibilidade</h3>
+                    <p style="margin-top: 6px;">Personalize o fundo da tela e o tamanho do texto para facilitar a leitura.</p>
+
+                    <div style="margin-top: 16px;">
+                        <strong>Fundo / Tema:</strong>
+                        <div class="config-actions-row">
+                            <button type="button" class="config-btn tema-btn ativo" data-tema="padrao">Fundo Padrão</button>
+                            <button type="button" class="config-btn tema-btn" data-tema="tema-suave">Fundo Suave</button>
+                            <button type="button" class="config-btn tema-btn" data-tema="tema-escuro">Modo Escuro</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 18px;">
+                        <strong>Tamanho do Texto:</strong>
+                        <div class="config-actions-row">
+                            <button type="button" class="config-btn fonte-btn" data-escala="0.92">Diminuir (A-)</button>
+                            <button type="button" class="config-btn fonte-btn ativo" data-escala="1">Padrão (A)</button>
+                            <button type="button" class="config-btn fonte-btn" data-escala="1.12">Aumentar (A+)</button>
+                            <button type="button" class="config-btn fonte-btn" data-escala="1.22">Extra Grande (A++)</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 18px;">
+                        <button type="button" id="btnRestaurarConfig" class="config-btn">
+                            Restaurar Padrão
+                        </button>
+                    </div>
+
+                    <span id="feedbackConfig" class="status-feedback"></span>
+                </div>
             </div>
         </main>
     </div>
 
+    <script>
+        (function () {
+            const CHAVE_TEMA = 'conectasi_tema';
+            const CHAVE_ESCALA = 'conectasi_escala_fonte';
+            const CHAVE_FOTO = 'conectasi_foto_perfil';
+
+            const feedbackConfig = document.getElementById('feedbackConfig');
+            const feedbackPerfil = document.getElementById('feedbackPerfil');
+
+            function mostrarFeedback(el, texto) {
+                if (!el) return;
+                el.textContent = texto + ' ✓';
+                setTimeout(() => {
+                    el.textContent = '';
+                }, 2500);
+            }
+
+            function aplicarTema(tema, exibirAviso = false) {
+                document.body.classList.remove('tema-suave', 'tema-escuro');
+                if (tema === 'tema-suave' || tema === 'tema-escuro') {
+                    document.body.classList.add(tema);
+                }
+                localStorage.setItem(CHAVE_TEMA, tema);
+
+                document.querySelectorAll('.tema-btn').forEach(btn => {
+                    btn.classList.toggle('ativo', btn.dataset.tema === tema);
+                });
+
+                if (exibirAviso) {
+                    mostrarFeedback(feedbackConfig, 'Fundo atualizado');
+                }
+            }
+
+            function aplicarEscalaFonte(escala, exibirAviso = false) {
+                const valor = parseFloat(escala) || 1;
+                document.documentElement.style.fontSize = (valor * 16) + 'px';
+                localStorage.setItem(CHAVE_ESCALA, String(valor));
+
+                document.querySelectorAll('.fonte-btn').forEach(btn => {
+                    btn.classList.toggle('ativo', parseFloat(btn.dataset.escala) === valor);
+                });
+
+                if (exibirAviso) {
+                    mostrarFeedback(feedbackConfig, 'Tamanho do texto ajustado');
+                }
+            }
+
+            function aplicarFoto(dataUrl, exibirAviso = false) {
+                const avatarGrande = document.getElementById('avatarPerfil');
+                const avataresMenores = document.querySelectorAll('.avatar, .avatar-small');
+
+                if (dataUrl && avatarGrande) {
+                    avatarGrande.innerHTML = `<img src="${dataUrl}" alt="Foto de perfil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                    avataresMenores.forEach(av => {
+                        av.innerHTML = `<img src="${dataUrl}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                    });
+                    localStorage.setItem(CHAVE_FOTO, dataUrl);
+                    if (exibirAviso) {
+                        mostrarFeedback(feedbackPerfil, 'Foto de perfil atualizada');
+                    }
+                }
+            }
+
+            // Eventos de tema
+            document.querySelectorAll('.tema-btn').forEach(btn => {
+                btn.addEventListener('click', () => aplicarTema(btn.dataset.tema, true));
+            });
+
+            // Eventos de tamanho de fonte
+            document.querySelectorAll('.fonte-btn').forEach(btn => {
+                btn.addEventListener('click', () => aplicarEscalaFonte(btn.dataset.escala, true));
+            });
+
+            // Restaurar padrão
+            const btnRestaurar = document.getElementById('btnRestaurarConfig');
+            if (btnRestaurar) {
+                btnRestaurar.addEventListener('click', () => {
+                    aplicarTema('padrao', false);
+                    aplicarEscalaFonte(1, false);
+                    mostrarFeedback(feedbackConfig, 'Configurações restauradas para o padrão');
+                });
+            }
+
+            // Upload de foto de perfil
+            const inputFoto = document.getElementById('inputFotoPerfil');
+            if (inputFoto) {
+                inputFoto.addEventListener('change', (e) => {
+                    const arquivo = e.target.files && e.target.files[0];
+                    if (!arquivo) return;
+                    const leitor = new FileReader();
+                    leitor.onload = (ev) => {
+                        aplicarFoto(ev.target.result, true);
+                    };
+                    leitor.readAsDataURL(arquivo);
+                });
+            }
+
+            // Edição rápida de contato
+            const btnEditar = document.getElementById('btnEditarPerfil');
+            const btnSalvar = document.getElementById('btnSalvarPerfil');
+            const emailPessoalEl = document.getElementById('emailPessoalTexto');
+            const telefoneEl = document.getElementById('telefoneTexto');
+
+            if (btnEditar && btnSalvar && emailPessoalEl && telefoneEl) {
+                btnEditar.addEventListener('click', () => {
+                    const emailAtual = emailPessoalEl.textContent.trim();
+                    const telAtual = telefoneEl.textContent.trim();
+
+                    emailPessoalEl.innerHTML = `<input type="email" id="inputEmailPessoal" class="edit-input" value="${emailAtual}">`;
+                    telefoneEl.innerHTML = `<input type="text" id="inputTelefone" class="edit-input" value="${telAtual}">`;
+
+                    btnEditar.style.display = 'none';
+                    btnSalvar.style.display = 'inline-block';
+                });
+
+                btnSalvar.addEventListener('click', () => {
+                    const novoEmail = document.getElementById('inputEmailPessoal');
+                    const novoTel = document.getElementById('inputTelefone');
+
+                    if (novoEmail && novoEmail.value.trim()) {
+                        emailPessoalEl.textContent = novoEmail.value.trim();
+                    }
+                    if (novoTel && novoTel.value.trim()) {
+                        telefoneEl.textContent = novoTel.value.trim();
+                    }
+
+                    btnSalvar.style.display = 'none';
+                    btnEditar.style.display = 'inline-block';
+                    mostrarFeedback(feedbackPerfil, 'Dados de contato salvos');
+                });
+            }
+
+            // Carrega preferências salvas ao abrir a página
+            const temaSalvo = localStorage.getItem(CHAVE_TEMA) || 'padrao';
+            const escalaSalva = localStorage.getItem(CHAVE_ESCALA) || '1';
+            const fotoSalva = localStorage.getItem(CHAVE_FOTO);
+
+            aplicarTema(temaSalvo, false);
+            aplicarEscalaFonte(escalaSalva, false);
+            if (fotoSalva) {
+                aplicarFoto(fotoSalva, false);
+            }
+        })();
+    </script>
     <script src="js/script.js"></script>
 </body>
 </html>
