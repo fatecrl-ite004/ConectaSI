@@ -35,10 +35,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 2. Botão de notificações (abre/fecha painel com avisos e zera o contador)
+    // 2. Botão de notificações (abre/fecha painel com avisos e sincroniza contador de não lidos)
     const notifBtn = document.querySelector(".icon-btn[title='Notificações']");
     const badge = notifBtn ? notifBtn.querySelector(".badge") : null;
     const navbarActions = document.querySelector(".navbar-actions");
+
+    const sincronizarContadorNaoLidos = (valor) => {
+        const candidatos = Array.from(document.querySelectorAll("*")).filter((el) => {
+            if (el.children.length > 0) return false;
+            const paiTexto = el.parentElement?.innerText || "";
+            return /n[ãa]o\s*lidos/i.test(paiTexto) && /^\d+$/.test(el.textContent.trim());
+        });
+
+        candidatos.forEach((el) => {
+            el.textContent = String(valor);
+        });
+    };
+
+    if (badge) {
+        const valorInicial = parseInt(badge.textContent.trim(), 10);
+        if (!Number.isNaN(valorInicial)) {
+            sincronizarContadorNaoLidos(valorInicial);
+        }
+    }
 
     if (notifBtn && navbarActions) {
         let notifDropdown = document.querySelector(".notif-dropdown");
@@ -87,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 badge.textContent = "0";
                 badge.style.display = "none";
             }
+            sincronizarContadorNaoLidos(0);
 
             const estaVisivel = notifDropdown.style.display === "block";
             notifDropdown.style.display = estaVisivel ? "none" : "block";
