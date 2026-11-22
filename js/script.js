@@ -187,6 +187,194 @@ document.addEventListener("DOMContentLoaded", () => {
         materialsContainer.appendChild(emptyMsg);
     }
 
+    // 2.3. Favoritos em disciplinas (estrela nos cards + filtro ao clicar em "Favoritos" no menu)
+    const FAV_STORAGE_KEY = "conectasi_favoritos";
+    const FAV_FILTER_KEY = "conectasi_apenas_favoritos";
+
+    const lerFavoritos = () => {
+        try {
+            const raw = localStorage.getItem(FAV_STORAGE_KEY);
+            const parsed = raw ? JSON.parse(raw) : [];
+            return Array.isArray(parsed) ? parsed : [];
+        } catch {
+            return [];
+        }
+    };
+
+    const salvarFavoritos = (lista) => {
+        localStorage.setItem(FAV_STORAGE_KEY, JSON.stringify(lista));
+    };
+
+    const disciplineCards = Array.from(document.querySelectorAll(".discipline-detailed-card, .discipline-card"));
+    const disciplinesGrid = document.querySelector(".full-disciplines-grid");
+
+    let favBanner = null;
+    let favEmptyMsg = null;
+
+    const atualizarFiltroFavoritos = () => {
+        if (!disciplinesGrid || disciplineCards.length === 0) return;
+
+        const apenasFavoritos = localStorage.getItem(FAV_FILTER_KEY) === "true";
+        const favoritosAtuais = lerFavoritos();
+
+        if (!favBanner) {
+            favBanner = document.createElement("div");
+            favBanner.className = "favorites-filter-banner";
+            favBanner.style.gridColumn = "1 / -1";
+            favBanner.style.display = "flex";
+            favBanner.style.flexWrap = "wrap";
+            favBanner.style.alignItems = "center";
+            favBanner.style.justifyContent = "space-between";
+            favBanner.style.gap = "12px";
+            favBanner.style.padding = "12px 16px";
+            favBanner.style.borderRadius = "10px";
+            favBanner.style.backgroundColor = "#fefce8";
+            favBanner.style.border = "1px solid #fde047";
+            favBanner.style.color = "#854d0e";
+            favBanner.style.fontSize = "0.9rem";
+
+            const textoFav = document.createElement("span");
+            textoFav.className = "favorites-banner-text";
+
+            const btnMostrarTodas = document.createElement("button");
+            btnMostrarTodas.type = "button";
+            btnMostrarTodas.textContent = "Mostrar todas as disciplinas";
+            btnMostrarTodas.style.padding = "6px 12px";
+            btnMostrarTodas.style.borderRadius = "8px";
+            btnMostrarTodas.style.border = "1px solid #facc15";
+            btnMostrarTodas.style.backgroundColor = "#ffffff";
+            btnMostrarTodas.style.color = "#854d0e";
+            btnMostrarTodas.style.fontWeight = "600";
+            btnMostrarTodas.style.cursor = "pointer";
+
+            btnMostrarTodas.addEventListener("click", () => {
+                localStorage.setItem(FAV_FILTER_KEY, "false");
+                atualizarFiltroFavoritos();
+            });
+
+            favBanner.appendChild(textoFav);
+            favBanner.appendChild(btnMostrarTodas);
+            disciplinesGrid.prepend(favBanner);
+        }
+
+        if (!favEmptyMsg) {
+            favEmptyMsg = document.createElement("p");
+            favEmptyMsg.className = "favorites-empty-msg";
+            favEmptyMsg.style.gridColumn = "1 / -1";
+            favEmptyMsg.style.padding = "16px";
+            favEmptyMsg.style.borderRadius = "10px";
+            favEmptyMsg.style.backgroundColor = "#f8fafc";
+            favEmptyMsg.style.border = "1px solid #e2e8f0";
+            favEmptyMsg.style.color = "#475569";
+            favEmptyMsg.style.display = "none";
+            favEmptyMsg.textContent =
+                "Você ainda não favoritou nenhuma disciplina. Clique na estrela (☆) de um card para salvar nos favoritos.";
+            disciplinesGrid.appendChild(favEmptyMsg);
+        }
+
+        if (!apenasFavoritos) {
+            favBanner.style.display = "none";
+            favEmptyMsg.style.display = "none";
+            disciplineCards.forEach((card) => {
+                card.style.display = "";
+            });
+            return;
+        }
+
+        let visiveis = 0;
+        disciplineCards.forEach((card) => {
+            const nome = card.querySelector("h3, h2")?.textContent.trim() || "";
+            const ehFavorito = favoritosAtuais.includes(nome);
+            card.style.display = ehFavorito ? "" : "none";
+            if (ehFavorito) visiveis += 1;
+        });
+
+        favBanner.style.display = "flex";
+        const textoEl = favBanner.querySelector(".favorites-banner-text");
+        if (textoEl) {
+            textoEl.innerHTML =
+                visiveis > 0
+                    ? `Exibindo <strong>Favoritos</strong> (${visiveis} ${visiveis === 1 ? "disciplina" : "disciplinas"})`
+                    : "Exibindo <strong>Favoritos</strong>";
+        }
+        favEmptyMsg.style.display = visiveis === 0 ? "block" : "none";
+    };
+
+    if (disciplineCards.length > 0) {
+        const favoritosSalvos = lerFavoritos();
+
+        disciplineCards.forEach((card) => {
+            const nomeDisciplina = card.querySelector("h3, h2")?.textContent.trim();
+            if (!nomeDisciplina) return;
+
+            const cardTop = card.querySelector(".card-top");
+            const favBtn = document.createElement("button");
+            favBtn.type = "button";
+            favBtn.className = "btn-favorite-toggle";
+            favBtn.style.background = "transparent";
+            favBtn.style.border = "none";
+            favBtn.style.cursor = "pointer";
+            favBtn.style.fontSize = "1.2rem";
+            favBtn.style.lineHeight = "1";
+            favBtn.style.padding = "2px 4px";
+
+            const aplicarEstadoEstrela = (isFav) => {
+                favBtn.textContent = isFav ? "★" : "☆";
+                favBtn.style.color = isFav ? "#eab308" : "#94a3b8";
+                favBtn.title = isFav ? "Remover dos favoritos" : "Adicionar aos favoritos";
+                favBtn.setAttribute("aria-pressed", String(isFav));
+            };
+
+            aplicarEstadoEstrela(favoritosSalvos.includes(nomeDisciplina));
+
+            favBtn.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+
+                const atual = lerFavoritos();
+                const jaExiste = atual.includes(nomeDisciplina);
+                const novaLista = jaExiste
+                    ? atual.filter((item) => item !== nomeDisciplina)
+                    : [...atual, nomeDisciplina];
+
+                salvarFavoritos(novaLista);
+                aplicarEstadoEstrela(!jaExiste);
+
+                if (localStorage.getItem(FAV_FILTER_KEY) === "true") {
+                    atualizarFiltroFavoritos();
+                }
+            });
+
+            if (cardTop) {
+                cardTop.appendChild(favBtn);
+            } else {
+                favBtn.style.float = "right";
+                card.prepend(favBtn);
+            }
+        });
+
+        atualizarFiltroFavoritos();
+    }
+
+    const menuFavLinks = Array.from(document.querySelectorAll(".menu-nav a")).filter((a) =>
+        a.textContent.toLowerCase().includes("favoritos")
+    );
+
+    menuFavLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+            const estaEmDisciplinas = Boolean(disciplinesGrid);
+            const filtroAtual = localStorage.getItem(FAV_FILTER_KEY) === "true";
+
+            if (estaEmDisciplinas) {
+                event.preventDefault();
+                localStorage.setItem(FAV_FILTER_KEY, filtroAtual ? "false" : "true");
+                atualizarFiltroFavoritos();
+            } else {
+                localStorage.setItem(FAV_FILTER_KEY, "true");
+            }
+        });
+    });
+
     // 3. Candidatura em vagas de estágio (abre caixa para currículo/observação no card)
     const applyButtons = document.querySelectorAll(".btn-apply");
     applyButtons.forEach((btn) => {
